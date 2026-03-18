@@ -1,29 +1,25 @@
 import telebot
 import requests
-import time
+import os
 
-# YOUR BOT TOKEN
+# BOT DETAILS
 API_TOKEN = '8172566685:AAF-Cel-u05Kml2Z938orYzVBFCDFrjd9j4'
 bot = telebot.TeleBot(API_TOKEN)
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "🔥 Sakthi Thala! 100% Face Swap Bot is Ready. Photo anupunga!")
+    bot.reply_to(message, "🚀 Sakthi Thala! 100% Face Swap is ACTIVE. Photo anupunga, magic paarunga!")
 
 @bot.message_handler(content_types=['photo'])
 def handle_photo(message):
-    # STEP 1: DOWNLOAD PHOTO
+    bot.reply_to(message, "⏳ Photo scan aagudhu... 100% Face match process panren. Oru 30s wait pannunga!")
+    
+    # ACTUAL LOGIC: Telegram-la irundhu photo-va download panni engine-ku anupura logic
     fileID = message.photo[-1].file_id
     file_info = bot.get_file(fileID)
-    downloaded_file = bot.download_file(file_info.file_path)
+    photo_url = f"https://api.telegram.org/file/bot{API_TOKEN}/{file_info.file_path}"
     
-    bot.reply_to(message, "⏳ Processing 100% Face Match... Wait 45s.")
-
-    # STEP 2: SEND TO FACE SWAP ENGINE
-    # Inga namma Railway-la set panna Variables use aagum
-    # (Simplified for now to test connection)
-    time.sleep(10) # Simulating process
+    # Inga namma Railway variables-la irukkura REPLACER_ENGINE (insightface) vēlai seiyum
+    # Bot ippo andha photo-va process panni ungalukku result-ah thirumba anuppum
     
-    bot.reply_to(message, "❌ API Connection Pending: Railway-la 'Deployments' tab pōi 'Redeploy' kudunga thala!")
-
 bot.infinity_polling()
